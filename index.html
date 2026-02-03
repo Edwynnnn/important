@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Will you be my Valentine?</title>
+        <style>
+            body {
+                margin: 0;
+                height: 100vh;
+                background: linear-gradient(135deg, #ff758c, #ff7eb3);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Segoe UI', sans-serif;
+                color: #fff;
+                text-align: center;
+            }
+
+            .card {
+                background: rgba(255, 255, 255, 0.15);
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                max-width: 350px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+
+            button {
+                padding: 12px 25px;
+                border: none;
+                border-radius: 25px;
+                font-size: 1rem;
+                cursor: pointer;
+                margin: 10px;
+            }
+
+            .yes {
+                background: #fff;
+                color: #ff4d6d;
+                font-weight: bold;
+            }
+
+            .no {
+                position: absolute;
+                background: transparent;
+                color: #fff;
+                border: 2px solid #fff;
+                transition: left 0.2s ease, top 0.2s ease;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .heart {
+                position: fixed;
+                top: -10px;
+                font-size: 24px;
+                animation: fall linear forwards;
+                pointer-events: none;
+            }
+
+            @keyframes fall {
+                to {
+                    transform: translateY(110vh);
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="card" id="question">
+            <h1>Hey Princess 🙃</h1>
+            <p>Every moment with you means the world to me 😙💖💖</p>
+            <h2>Soooooo, will you be my Valentine?🤓😖</h2>
+
+            <button class="yes" onclick="sayYes()">Yes💖</button>
+            <button class="no" id="noBtn">No😭 </button>
+        </div>
+
+        <div class="card hidden" id="answer">
+            <h1>YAY!!!❤️</h1>
+            <p>I knew it 😏😏 </p>
+            <p>You just made me the happiest person alive🥰 </p>
+        </div>
+
+        <script>
+            function sayYes() {
+                document.getElementById("yesSound").play();
+
+                alert("Best decision you've ever made😌❤️")
+
+                document.getElementById("question").classList.add("hidden");
+                document.getElementById("answer").classList.remove("hidden");
+
+                startHearts();
+            }
+
+            const noBtn = document.getElementById("noBtn");
+
+            noBtn.addEventListener("mouseover", moveNo);
+            noBtn.addEventListener("click", moveNo);
+
+            function moveNo() {
+                const padding = 20;
+                const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+                const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style,top = `${randomY}px`;
+            }
+
+            function startHearts() {
+                const hearts = ["❤️", "💖", "💕", "💘", "💝"];
+                const interval = setInterval(() => {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }, 200);
+
+                setTimeout(() => {
+                    alert("Best decision you've ever made😌❤️");
+                }, 300);
+
+                // Stop after 5 seconds (so it doesn't go on forever)
+                setTimeout(() =>
+            clearInterval(interval), 5000);
+            }
+        </script>
+        <audio id="yesSound">
+            <source
+            src="https://www.soundjay.com/buttons/sounds/button-09.mp3" type="audio/mpeg">
+        </audio>
+    </body>
+</html>
